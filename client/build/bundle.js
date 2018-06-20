@@ -65,8 +65,103 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const CountriesViews = __webpack_require__(1);
+const Request = __webpack_require__(2);
+
+const countriesViews = new CountriesViews();
+const request = new Request('https://restcountries.eu/rest/v2/all');
+
+
+const appStart = function() {
+  request.get(getCountriesRequestComplete);
+}
+
+const getCountriesRequestComplete = function(allCountries) {
+  allCountries.forEach(function(country) {
+    countriesViews.addCountry(country);
+  })
+}
+
+
+window.addEventListener('load', appStart);
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
+var CountriesViews = function() {
+  this.countries = [];
+}
+
+CountriesViews.prototype.addCountry = function(country) {
+  this.countries.push(country);
+  this.render(country);
+}
+
+CountriesViews.prototype.clear = function(country) {
+  this.countries = [];
+  const ul = document.querySelector('#countries');
+  ul.innerHTML = '';
+}
+
+CountriesViews.prototype.render = function(country){
+  const ul = document.querySelector('#countries');
+  const li = document.createElement('li');
+  const text = document.createElement('p');
+  text.innerText = `${country.name}" - "${country.capital}" - "${country.population}`;
+  li.appendChild(text);
+  ul.appendChild(li);
+}
+
+
+module.exports = CountriesViews;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+const Request = function(url) {
+  this.url = url;
+}
+
+Request.prototype.get = function(next) {
+  const request = new XMLHttpRequest();
+  request.open("GET", this.url);
+  request.addEventListener("load", function() {
+    if (this.status !== 200) return;
+    const responseBody = JSON.parse(this.response);
+    next(responseBody);
+  });
+  request.send();
+};
+
+Request.prototype.post = function (country, next) {
+  const request = new XMLHttpRequest();
+  request.open("POST", this.url);
+  request.setRequestHeader("Content-Type", "application/json");
+  request.addEventListener("load", function() {
+    if (this.status !== 201) return;
+    const responseBody = JSON.parse(this.response);
+    next(responseBody);
+  })
+  request.send(JSON.stringify(country))
+};
+
+Request.prototype.delete = function(next) {
+  const request = new XMLHttpRequest();
+  request.open("DELETE",this.url);
+  request.addEventListener("load", function(){
+    if (this.status !== 204) return;
+    next();
+  })
+  request.send()
+}
+
+module.exports = Request;
 
 
 /***/ })

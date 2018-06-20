@@ -10,7 +10,7 @@ Request.prototype.get = function(next) {
     const responseBody = JSON.parse(this.response);
     next(responseBody);
   });
-  request.send()
+  request.send();
 };
 
 Request.prototype.post = function (country, next) {
