@@ -8,4 +8,3 @@ config = {
 }
 
 module.exports = config;
-
