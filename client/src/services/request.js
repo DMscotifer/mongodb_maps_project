@@ -13,16 +13,19 @@ Request.prototype.get = function(next) {
   request.send();
 };
 
-Request.prototype.post = function (country, next) {
+Request.prototype.post = function (country, next){
+  console.log(country);
   const request = new XMLHttpRequest();
   request.open("POST", this.url);
   request.setRequestHeader("Content-Type", "application/json");
-  request.addEventListener("load", function() {
+  request.addEventListener("load", function(){
     if (this.status !== 201) return;
     const responseBody = JSON.parse(this.response);
     next(responseBody);
   })
-  request.send(JSON.stringify(country))
+  const jsonCountry = JSON.stringify(country)
+  console.log(jsonCountry);
+  request.send(jsonCountry);
 };
 
 Request.prototype.delete = function(next) {

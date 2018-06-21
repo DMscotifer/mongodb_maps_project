@@ -20,9 +20,10 @@ MongoClient.connect("mongodb://localhost:27017", function(err, client) {
   console.log("Connected to database!!");
 
   server.post("/api/countries", function(req, res, next) {
-    const quotesCollection = db.collection("countries");
-    const quoteToSave = req.body;
-    quotesCollection.save(quoteToSave, function(err, result) {
+    console.log("triggering post");
+    const countriesCollection = db.collection("countries");
+    const countryToSave = req.body;
+    countriesCollection.save(countryToSave, function(err, result) {
       if (err) next(err);
       res.status(201);
       res.json(result.ops[0]);
@@ -31,25 +32,25 @@ MongoClient.connect("mongodb://localhost:27017", function(err, client) {
   });
 
   server.get("/api/countries", function(req, res, next) {
-    const quotesCollection = db.collection("quotes");
-    quotesCollection.find().toArray(function(err, allCountries) {
+    const countriesCollection = db.collection("countries");
+    countriesCollection.find().toArray(function(err, allCountries) {
       if (err) next(err);
       res.json(allCountries);
     })
   })
 
   server.delete("/api/countries", function(req, res, next) {
-    const quotesCollection = db.collection("countries");
-    quotesCollection.remove({}, function(err, result) {
+    const countriesCollection = db.collection("countries");
+    countriesCollection.remove({}, function(err, result) {
       if (err) next(err);
       res.status(204).send();
     });
   });
 
   server.post("/api/countries/:id", function(req, res, next) {
-    const quotesCollection = db.collection("countries");
+    const countriesCollection = db.collection("countries");
     const objectID = ObjectID(req.params.id);
-    quotesCollection.update({_id: objectID}, req.body, function(err, result) {
+    countriesCollection.update({_id: objectID}, req.body, function(err, result) {
       if (err) next(err);
       res.status(201).send();
     })

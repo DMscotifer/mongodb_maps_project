@@ -1,3 +1,78 @@
- /* select option[disabled] {
-  display: none;
-} */
+h1{
+ font-family: courier;
+ font-size: 100px;
+ text-align: center;
+ color: ivory;
+ text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+
+}
+
+h2{
+ font-family: courier;
+ text-align: center;
+ background-color: ivory;
+}
+
+h3{
+ font-family: courier;
+}
+p {
+
+ font-family: courier;
+ font-size: 20px;
+ color: black;
+ /* width: 49%; */
+ float: center;
+ background-color: ivory;
+ text-align: center;
+ padding: 1% 0;
+ font-weight: bold;
+}
+
+div{
+ text-align: center;
+ border-color: black;
+}
+
+body{
+ background-color: lightslategrey;
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-position: center;
+ background-image: url("./SingHawkerStall.jpg");
+ background-size: cover;
+
+}
+
+select{
+ /* text-align: center;: */
+ align-content: center;
+ width: 100%;
+ font-size: 18px;
+ font-weight: bold;
+ color: yellow;
+ text-align-last:center;
+ background: lightslategrey;
+ border-color: yellow;
+ border-style: solid;
+ border-width: 4px;
+
+}
+
+img{
+ height: 50vh;
+ width: 10vw;
+
+ align-items: left;
+
+}
+
+#stall-data{
+ text-align: center;
+}
+
+#main-map {
+ height: 500px;
+ width: 100%;
+
+}

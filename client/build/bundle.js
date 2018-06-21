@@ -68,14 +68,22 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 const CountriesViews = __webpack_require__(1);
+const BucketlistViews = __webpack_require__(3);
 const Request = __webpack_require__(2);
 
 const countriesViews = new CountriesViews();
-const request = new Request('https://restcountries.eu/rest/v2/all');
+const bucketlistViews = new BucketlistViews();
+const apiRequest = new Request('https://restcountries.eu/rest/v2/all');
+const dbRequest = new Request('http://localhost:3000/api/countries');
 
 
 const appStart = function() {
-  request.get(getCountriesRequestComplete);
+  console.log("appStart ran");
+  apiRequest.get(getCountriesRequestComplete);
+
+  const createListItem = document.querySelector("#country-select");
+  createListItem.addEventListener("change", handleSelectCountry);
+
 }
 
 const getCountriesRequestComplete = function(allCountries) {
@@ -84,11 +92,20 @@ const getCountriesRequestComplete = function(allCountries) {
   })
 }
 
-document.addEventListener("change", function() {
+const createRequestComplete = function(savedCountry) {
+  countriesViews.addCountry(savedCountry);
+}
+
+const handleSelectCountry = function() {
+  // event.preventDefault();
   const selectedCountry = document.getElementById("country-select").value;
   console.log(selectedCountry);
 
-})
+  const countryToSend = {
+    name: selectedCountry
+  };
+  dbRequest.post(countryToSend, createRequestComplete);
+}
 
 window.addEventListener('load', appStart);
 
@@ -153,16 +170,19 @@ Request.prototype.get = function(next) {
   request.send();
 };
 
-Request.prototype.post = function (country, next) {
+Request.prototype.post = function (country, next){
+  console.log(country);
   const request = new XMLHttpRequest();
   request.open("POST", this.url);
   request.setRequestHeader("Content-Type", "application/json");
-  request.addEventListener("load", function() {
+  request.addEventListener("load", function(){
     if (this.status !== 201) return;
     const responseBody = JSON.parse(this.response);
     next(responseBody);
   })
-  request.send(JSON.stringify(country))
+  const jsonCountry = JSON.stringify(country)
+  console.log(jsonCountry);
+  request.send(jsonCountry);
 };
 
 Request.prototype.delete = function(next) {
@@ -176,6 +196,31 @@ Request.prototype.delete = function(next) {
 }
 
 module.exports = Request;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var BucketlistViews = function() {
+  this.bucketlist = [];
+}
+
+BucketlistViews.prototype.addCountryToList = function(country) {
+  this.bucketlist.push(country);
+  this.render(country);
+}
+
+BucketlistViews.prototype.render = function(country) {
+  const ul = document.querySelector('#bucketlist');
+  const li = document.createElement('li');
+  const text = document.createElement('p');
+  text.innerText = `${country.name} - ${country.capital}`;
+  li.appendChild(text);
+  ul.appendChild(li);
+}
+
+module.exports = BucketlistViews;
 
 
 /***/ })
