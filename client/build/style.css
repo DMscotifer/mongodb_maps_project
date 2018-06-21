@@ -34,13 +34,22 @@ div{
  border-color: black;
 }
 
+li{
+  font-family: courier;
+  font-size: 50px;
+  text-align: center;
+  color: ivory;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+
+}
+
 body{
  background-color: lightslategrey;
  background-repeat: no-repeat;
  background-attachment: fixed;
  background-position: center;
- background-image: url("./SingHawkerStall.jpg");
- background-size: cover;
+ background-image: url("https://cdn.shopify.com/s/files/1/1061/1924/products/Sad_Face_Emoji_large.png?v=1480481055");
+ background-size: 500px 500px;
 
 }
 
@@ -48,7 +57,7 @@ select{
  /* text-align: center;: */
  align-content: center;
  width: 100%;
- font-size: 18px;
+ font-size: 25px;
  font-weight: bold;
  color: yellow;
  text-align-last:center;

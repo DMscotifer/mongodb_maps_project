@@ -84,6 +84,17 @@ const appStart = function() {
   const createListItem = document.querySelector("#country-select");
   createListItem.addEventListener("change", handleSelectCountry);
 
+
+  dbRequest.get(populateList);
+}
+
+const populateList = function(countriesData){
+  countriesData.forEach(function(country){
+    const ul = document.querySelector('#bucketlist');
+    const li = document.createElement('li');
+    li.textContent = country.name;
+    ul.appendChild(li);
+  })
 }
 
 const getCountriesRequestComplete = function(allCountries) {
@@ -94,10 +105,12 @@ const getCountriesRequestComplete = function(allCountries) {
 
 const createRequestComplete = function(savedCountry) {
   countriesViews.addCountry(savedCountry);
+  // bucketlistViews.addCountry(savedCountry);
+
 }
 
 const handleSelectCountry = function() {
-  // event.preventDefault();
+  event.preventDefault();
   const selectedCountry = document.getElementById("country-select").value;
   console.log(selectedCountry);
 
@@ -128,15 +141,6 @@ CountriesViews.prototype.clear = function(country) {
   const ul = document.querySelector('#countries');
   ul.innerHTML = '';
 }
-
-// CountriesViews.prototype.render = function(country){
-//   const ul = document.querySelector('#countries');
-//   const li = document.createElement('li');
-//   const text = document.createElement('p');
-//   text.innerText = `${country.name} - ${country.capital} - ${country.population}`;
-//   li.appendChild(text);
-//   ul.appendChild(li);
-// }
 
 CountriesViews.prototype.render = function(country){
   const select = document.querySelector('#country-select');
@@ -206,16 +210,18 @@ var BucketlistViews = function() {
   this.bucketlist = [];
 }
 
-BucketlistViews.prototype.addCountryToList = function(country) {
-  this.bucketlist.push(country);
-  this.render(country);
+BucketlistViews.prototype.addToList = function(bucketlist) {
+  this.bucketlist.push(bucketlist);
+  this.render(bucketlist);
 }
 
 BucketlistViews.prototype.render = function(country) {
   const ul = document.querySelector('#bucketlist');
   const li = document.createElement('li');
   const text = document.createElement('p');
-  text.innerText = `${country.name} - ${country.capital}`;
+  // text.innerText = `${country}`;
+  text.innerText = country.name;
+
   li.appendChild(text);
   ul.appendChild(li);
 }

@@ -15,6 +15,17 @@ const appStart = function() {
   const createListItem = document.querySelector("#country-select");
   createListItem.addEventListener("change", handleSelectCountry);
 
+
+  dbRequest.get(populateList);
+}
+
+const populateList = function(countriesData){
+  countriesData.forEach(function(country){
+    const ul = document.querySelector('#bucketlist');
+    const li = document.createElement('li');
+    li.textContent = country.name;
+    ul.appendChild(li);
+  })
 }
 
 const getCountriesRequestComplete = function(allCountries) {
@@ -25,10 +36,12 @@ const getCountriesRequestComplete = function(allCountries) {
 
 const createRequestComplete = function(savedCountry) {
   countriesViews.addCountry(savedCountry);
+  // bucketlistViews.addCountry(savedCountry);
+
 }
 
 const handleSelectCountry = function() {
-  // event.preventDefault();
+  event.preventDefault();
   const selectedCountry = document.getElementById("country-select").value;
   console.log(selectedCountry);
 

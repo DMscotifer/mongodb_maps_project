@@ -13,15 +13,6 @@ CountriesViews.prototype.clear = function(country) {
   ul.innerHTML = '';
 }
 
-// CountriesViews.prototype.render = function(country){
-//   const ul = document.querySelector('#countries');
-//   const li = document.createElement('li');
-//   const text = document.createElement('p');
-//   text.innerText = `${country.name} - ${country.capital} - ${country.population}`;
-//   li.appendChild(text);
-//   ul.appendChild(li);
-// }
-
 CountriesViews.prototype.render = function(country){
   const select = document.querySelector('#country-select');
   const option = document.createElement('option');
