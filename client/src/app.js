@@ -15,5 +15,10 @@ const getCountriesRequestComplete = function(allCountries) {
   })
 }
 
+document.addEventListener("change", function() {
+  const selectedCountry = document.getElementById("country-select").value;
+  console.log(selectedCountry);
+
+})
 
 window.addEventListener('load', appStart);
